@@ -3,7 +3,13 @@ package entry;/**
  */
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class App extends Application {
 
@@ -16,6 +22,14 @@ public class App extends Application {
         Bootstrapper bootstrapper = new Bootstrapper();
         bootstrapper.run();
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/view/MainView.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+            primaryStage.setScene(new Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         primaryStage.centerOnScreen();
         primaryStage.show();
