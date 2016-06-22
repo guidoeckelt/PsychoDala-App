@@ -1,0 +1,130 @@
+.root{
+    somegrey:                           #c0c0c0
+
+}
+/*
+ *============================MenuBar
+*/
+.menu-bar{
+    -fx-background-color:               linear-gradient(from 50% 0% to 50% 100%, #708090 0%, #B0B0B0 50%, #708090 100%);
+}
+
+/*
+ *==============================Menu
+*/
+
+
+/*
+ *=========================Menu-Item
+*/
+
+
+/*
+ *======================END==MenuBar
+*/
+/*
+ *====================Window-Buttons
+*/
+.hbox-btn-container{
+    -fx-background-color:                   somegrey;
+    hovergrey:                              rgba(170,170,170,0.6);
+    hoverred:                               rgba(255,0,0,0.6);
+    textred:                                rgb(255,0,0);
+}
+.btn-minimize{
+    -fx-max-width:                          15;
+    -fx-pref-width:                         15;
+    -fx-min-width:                          15;
+    -fx-max-height:                         25;
+    -fx-pref-height:                            25;
+    -fx-min-height:                         25;
+
+    -fx-background-color:                   transparent;
+    -fx-background-radius:                  0;
+
+    -fx-border-radius:                      0;
+
+    -fx-padding:                            0;
+}
+.btn-minimize:hover{
+    -fx-background-color:                   hovergrey;
+}
+
+.btn-switch-window-state{
+    -fx-max-width:                          15;
+    -fx-pref-width:                         15;
+    -fx-min-width:                          15;
+    -fx-max-height:                         25;
+    -fx-pref-height:                        25;
+    -fx-min-height:                         25;
+
+    -fx-background-color:                   transparent;
+    -fx-background-radius:                  0;
+
+    -fx-border-radius:                      0;
+
+    -fx-padding:                            0;
+}
+.btn-switch-window-state:hover{
+    -fx-background-color:                   hovergrey;
+}
+
+.btn-switch-window-state-max{
+    -fx-max-width:                          15;
+    -fx-pref-width:                         15;
+    -fx-min-width:                          15;
+    -fx-max-height:                         25;
+    -fx-pref-height:                        25;
+    -fx-min-height:                         25;
+
+    -fx-background-color:                   transparent;
+    -fx-background-radius:                  0;
+
+    -fx-border-radius:                      0;
+
+    -fx-padding:                            0;
+}
+.btn-switch-window-state-max:hover{
+    -fx-background-color:                   hovergrey;
+}
+
+.btn-exit{
+    -fx-max-width:                          30;
+    -fx-pref-width:                         30;
+    -fx-min-width:                          30;
+    -fx-max-height:                         25;
+    -fx-pref-height:                        25;
+    -fx-min-height:                         25;
+
+    -fx-background-color:                   transparent;
+    -fx-background-radius:                  0;
+
+    -fx-border-width:                       0;
+    -fx-border-radius:                      0;
+
+    -fx-font-size:                          16;
+    -fx-font-family:                        'Arial';
+    -fx-font-style:                         normal;
+    -fx-font-weigh:                         800;
+    -fx-text-fill:                          textred;
+
+    -fx-padding:                            0;
+}
+.btn-exit:hover{
+    -fx-background-color:                   hoverred;
+    -fx-text-fill:                          #FFF;
+}
+/*
+ *===============END==Window-Buttons
+*/
+/*
+ *===========================Display
+*/
+.root-display{
+    -fx-background-color:                   #000;
+}
+
+
+/*
+ *======================END==Display
+*/
