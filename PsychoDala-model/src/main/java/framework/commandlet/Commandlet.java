@@ -16,13 +16,13 @@ public class Commandlet {
     private String name;
     private Shortcut shortcut;
     private EventType<KeyEvent> eventType;
-
     private String classStr;
+
     private String shortcutStr;
     private String eventTypeStr;
 
     public void execute(){
-        System.out.println(name+" is executed");
+        System.out.println("Default: "+name+" is executed");
     }
 
     private void updateShorcut(String shortcutStr){

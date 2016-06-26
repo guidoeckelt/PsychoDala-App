@@ -78,7 +78,6 @@ public class CommandletContext
             int size = commandletGroup.getCommandlets().size();
             for(int i = 0; i < size;i++){
                 Commandlet commandlet = commandletGroup.getCommandlets().get(i);
-                System.out.println(commandlet.getClassStr());
                 Commandlet explicitCommandlet;
                 try {
                     explicitCommandlet = (Commandlet)Class.forName(commandlet.getClassStr()).getConstructor().newInstance();
