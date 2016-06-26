@@ -1,16 +1,12 @@
-package framework;
-
-import org.omg.CORBA.COMM_FAILURE;
+package framework.commandlet;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
  * Created by Guido on 22.06.2016.
  */
-@XmlRootElement(name="commandlets")
 public class CommandletGroup {
 
     private String name;
@@ -30,5 +26,16 @@ public class CommandletGroup {
     @XmlElement(name="commandlet")
     public void setCommandlets(List<Commandlet> commandlets) {
         this.commandlets = commandlets;
+    }
+
+    public void replace(Commandlet commandlet){
+        int size = commandlets.size();
+        for(int i = 0 ; i < size;i++){
+            Commandlet oldCommandlet = commandlets.get(i);
+            if(commandlet.getName().equalsIgnoreCase(oldCommandlet.getName())){
+                commandlets.add(i, commandlet);
+                commandlets.remove(oldCommandlet);
+            }
+        }
     }
 }
