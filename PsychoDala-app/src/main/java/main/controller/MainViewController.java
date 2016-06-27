@@ -46,12 +46,15 @@ public class MainViewController
 //==============IControllerBase-Implementation
     protected void load() {
         applicationContext = new ApplicationContext();
+        applicationContext.load();
         commandletContext = new CommandletContext(applicationContext);
+        commandletContext.load();
         windowController = new WindowController();
     }
 
     protected void cleanup() {
-
+        applicationContext.save();
+        commandletContext.save();
     }
 //=================FX-Controller
     public void initialize(URL location, ResourceBundle resources) {
@@ -65,7 +68,6 @@ public class MainViewController
 
 //Methods
     private void loadMenus(){
-        commandletContext.load();
         for(CommandletGroup commandletGroup : commandletContext.getCommandletGroups()){
             Menu menu = new Menu();
             menu.setText(commandletGroup.getName());
@@ -75,7 +77,7 @@ public class MainViewController
                 App.PRIMARYSTAGE.addEventHandler(commandletShorcutHandler.getKeyEventType(), commandletShorcutHandler::OnKeyInput);
                 MenuItem menuItem = new MenuItem();
                 menu.setOnAction(action-> commandlet.execute());
-                menuItem.setText(commandlet.getName()+" "+commandlet.getShortcutStr());
+                menuItem.setText(commandlet.getName()+" ("+commandlet.getShortcutStr()+")");
                 menu.getItems().add(menuItem);
             }
             this.menu.getMenus().add(menu);

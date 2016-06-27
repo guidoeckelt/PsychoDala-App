@@ -5,7 +5,9 @@ package framework.application;
  */
 public interface IApplicationContext {
 
-    String getApplicationDirectory();
+    void load();
+    void save();
 
+    String getApplicationDirectory();
     String getConfigDirectory();
 }
