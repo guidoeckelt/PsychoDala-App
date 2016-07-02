@@ -2,6 +2,7 @@ package framework.commandlet;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,14 +11,13 @@ import java.util.List;
 @XmlRootElement(name="commandlet-configuration")
 public class CommandletConfiguration {
 
-    private List<CommandletGroup> commandletGroups;
-
-    public List<CommandletGroup> getCommandletGroups() {
-        return commandletGroups;
-    }
+    private List<CommandletGroupDescriptor> commandletGroups = new ArrayList<>();
 
     @XmlElement(name="commandlet-group")
-    public void setCommandletGroups(List<CommandletGroup> commandletGroups) {
+    public List<CommandletGroupDescriptor> getCommandletGroups() {
+        return commandletGroups;
+    }
+    public void setCommandletGroupDescriptors(List<CommandletGroupDescriptor> commandletGroups) {
         this.commandletGroups = commandletGroups;
     }
 

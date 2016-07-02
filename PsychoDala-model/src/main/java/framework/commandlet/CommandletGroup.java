@@ -2,6 +2,7 @@ package framework.commandlet;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,12 +11,11 @@ import java.util.List;
 public class CommandletGroup {
 
     private String name;
-    private List<Commandlet> commandlets;
+    private List<Commandlet> commandlets = new ArrayList<>();
 
     public String getName() {
         return name;
     }
-    @XmlAttribute
     public void setName(String name) {
         this.name = name;
     }
@@ -23,19 +23,8 @@ public class CommandletGroup {
     public List<Commandlet> getCommandlets() {
         return commandlets;
     }
-    @XmlElement(name="commandlet")
     public void setCommandlets(List<Commandlet> commandlets) {
         this.commandlets = commandlets;
     }
 
-    public void replace(Commandlet commandlet){
-        int size = commandlets.size();
-        for(int i = 0 ; i < size;i++){
-            Commandlet oldCommandlet = commandlets.get(i);
-            if(commandlet.getName().equalsIgnoreCase(oldCommandlet.getName())){
-                commandlets.add(i, commandlet);
-                commandlets.remove(oldCommandlet);
-            }
-        }
-    }
 }

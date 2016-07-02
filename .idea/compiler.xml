@@ -23,15 +23,13 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="PsychoDala-app" />
-        <module name="PsychoDala-App" />
         <module name="PsychoDala-model" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="PsychoDala-App" target="1.5" />
+      <module name="PsychoDala" target="1.8" />
       <module name="PsychoDala-app" target="1.8" />
       <module name="PsychoDala-model" target="1.8" />
-      <module name="PsychoDala-Parent" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

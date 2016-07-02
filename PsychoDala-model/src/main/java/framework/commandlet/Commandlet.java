@@ -13,64 +13,18 @@ import javax.xml.bind.annotation.XmlAttribute;
 public class Commandlet
         implements ICommandlet{
 
-
     private String name;
     private Shortcut shortcut;
     private EventType<KeyEvent> eventType;
-    private String classStr;
-//========Placeholder-Attributs
-    private String shortcutStr;
-    private String eventTypeStr;
 
     public void execute(){
         System.out.println("Default: "+name+" is executed");
-    }
-
-    private void updateShorcut(String shortcutStr){
-        if(!shortcutStr.contains("+")){
-            buildShortcut(shortcutStr);
-        }else{
-            String[] shortcutStrSplit = shortcutStr.split("\\+");//RegExp has to escape '+' sign -> split('\\+')
-            buildShortcutWithSpecialKey(shortcutStrSplit[1].trim(),shortcutStrSplit[0].trim());//Format is SpecialKey+Key -> 1 , 0
-        }
-    }
-    private void updateShorcutStr(Shortcut shortcut){
-        if(!shortcut.hasSpecialKey()){
-            shortcutStr = shortcut.getKey().getName();
-        }else{
-            shortcutStr = shortcut.getSpecialKey().getName()+"+"+shortcut.getKey().getName();
-        }
-    }
-    private void buildShortcut(String key){
-        shortcut = new Shortcut(KeyCode.getKeyCode(key));
-
-    }
-    private void buildShortcutWithSpecialKey(String keyStr, String specialKeyStr){
-        KeyCode key = KeyCode.getKeyCode(keyStr);
-        KeyCode specialKey = KeyCode.getKeyCode(specialKeyStr);
-        shortcut = new Shortcut(key,specialKey);
-    }
-
-    private void updateEventType(String eventTypeStr){
-        if(eventTypeStr.equals(KeyEvent.KEY_RELEASED.getName())){
-            eventType = KeyEvent.KEY_RELEASED;
-        }
-        if(eventTypeStr.equals(KeyEvent.KEY_PRESSED.getName())){
-            eventType = KeyEvent.KEY_PRESSED;
-        }
-        if(eventTypeStr.equals(KeyEvent.KEY_TYPED.getName())){
-            eventType = KeyEvent.KEY_TYPED;
-        }
-    }
-    private void updateEventTypeStr(EventType<KeyEvent> eventType){
-        eventTypeStr = eventType.getName();
     }
 
     public Shortcut getShortcut() {
         return shortcut;
     }
     public void setShortcut(Shortcut shortcut) {
-        updateShorcutStr(shortcut);
         this.shortcut = shortcut;
     }
 
@@ -78,11 +32,9 @@ public class Commandlet
         return eventType;
     }
     public void setEventType(EventType<KeyEvent> eventType) {
-        updateEventTypeStr(eventType);
         this.eventType = eventType;
     }
 
-    @XmlAttribute
     public void setName(String name) {
         this.name = name;
     }
@@ -90,30 +42,5 @@ public class Commandlet
         return name;
     }
 
-    @XmlAttribute(name="shortcut")
-    public void setShortcutStr(String shortcut) {
-        updateShorcut(shortcut);
-        this.shortcutStr = shortcut;
-    }
-    public String getShortcutStr() {
-        return shortcutStr;
-    }
-
-    @XmlAttribute(name="eventType")
-    public void setEventTypeStr(String eventTypeStr) {
-        updateEventType(eventTypeStr);
-        this.eventTypeStr = eventTypeStr;
-    }
-    public String getEventTypeStr() {
-        return eventTypeStr;
-    }
-
-    @XmlAttribute(name="class")
-    public void setClassStr(String classStr) {
-        this.classStr = classStr;
-    }
-    public String getClassStr() {
-        return classStr;
-    }
 
 }

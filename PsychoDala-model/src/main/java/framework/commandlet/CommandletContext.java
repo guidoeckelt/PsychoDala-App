@@ -1,13 +1,14 @@
 package framework.commandlet;
 
+import framework.application.ApplicationContext;
 import framework.application.IApplicationContext;
+import javafx.application.Application;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,9 @@ public class CommandletContext
     private IApplicationContext applicationContext;
     private List<CommandletGroup> commandletGroups;
     private List<CommandletShorcutHandler> commandletShorcutHandlers;
+
+    private List<CommandletGroupDescriptor> commandletGroupDescriptors;
+    private CommandletFactory commandletFactory;
 
     public CommandletContext(IApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
@@ -40,14 +44,14 @@ public class CommandletContext
     }
 
     public void load() {
-        loadFromConfig();
-        loadExplicitCommandlets();
+        loadDescriptors();
+        loadCommandlets();
         createShortcutHandlers();
     }
     public void save() {
         File file = new File(applicationContext.getConfigDirectory()+"commandlets.config");
         CommandletConfiguration commandletConfiguration = new CommandletConfiguration();
-        commandletConfiguration.setCommandletGroups(commandletGroups);
+        commandletConfiguration.setCommandletGroupDescriptors(commandletFactory.getCommandletGroupDescriptors());
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(CommandletConfiguration.class);
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
@@ -59,7 +63,7 @@ public class CommandletContext
 
     }
 
-    private void loadFromConfig(){
+    private void loadDescriptors(){
         File file = new File(applicationContext.getConfigDirectory()+"commandlets.config");
         CommandletConfiguration commandletConfiguration;
         try {
@@ -67,37 +71,16 @@ public class CommandletContext
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
             commandletConfiguration = (CommandletConfiguration) unmarshaller.unmarshal(file);
-            commandletGroups = commandletConfiguration.getCommandletGroups();
+            commandletGroupDescriptors = commandletConfiguration.getCommandletGroups();
         } catch (JAXBException e) {
             e.printStackTrace();
         }
+
     }
 
-    private void loadExplicitCommandlets(){
-        for (CommandletGroup commandletGroup : commandletGroups){
-            int size = commandletGroup.getCommandlets().size();
-            for(int i = 0; i < size;i++){
-                Commandlet commandlet = commandletGroup.getCommandlets().get(i);
-                Commandlet explicitCommandlet;
-                try {
-                    explicitCommandlet = (Commandlet)Class.forName(commandlet.getClassStr()).getConstructor().newInstance();
-                    explicitCommandlet.setEventTypeStr(commandlet.getEventTypeStr());
-                    explicitCommandlet.setShortcutStr(commandlet.getShortcutStr());
-                    explicitCommandlet.setName(commandlet.getName());
-                    commandletGroup.replace(explicitCommandlet);
-                } catch (InstantiationException instantEx) {
-                    System.out.println("InstantiationException : "+instantEx.getMessage());
-                } catch (IllegalAccessException illegalAccessEx) {
-                    System.out.println("IllegalAccessException : "+illegalAccessEx.getMessage());
-                } catch (InvocationTargetException invocTargetEx) {
-                    System.out.println("InvocationTargetException : "+invocTargetEx.getMessage());
-                } catch (NoSuchMethodException noSuchMethodEx) {
-                    System.out.println("NoSuchMethodException : "+noSuchMethodEx.getMessage());
-                } catch (ClassNotFoundException classNotFoundEx) {
-                    System.out.println("ClassNotFoundException : "+classNotFoundEx.getMessage());
-                }
-            }
-        }
+    private void loadCommandlets(){
+        commandletFactory = new CommandletFactory(commandletGroupDescriptors);
+        commandletGroups = commandletFactory.buildCommandlets();
     }
 
     private void createShortcutHandlers(){
@@ -108,33 +91,5 @@ public class CommandletContext
                 commandletShorcutHandlers.add(new CommandletShorcutHandler(commandlet, commandlet.getEventType()));
             }
         }
-    }
-
-    private void dummydata(){
-        commandletGroups = new ArrayList<>();
-
-        CommandletGroup commandletGroup = new CommandletGroup();
-        commandletGroup.setName("File");
-        List<Commandlet> commandlets = new ArrayList<>();
-        Commandlet command = new Commandlet();
-        command.setName("Save As");
-        command.setShortcutStr("STRG+S");
-        commandlets.add(command);
-        commandletGroup.setCommandlets(commandlets);
-        commandletGroups.add(commandletGroup);
-
-        commandletGroup = new CommandletGroup();
-        commandletGroup.setName("Edit");
-        commandlets = new ArrayList<>();
-        command = new Commandlet();
-        command.setName("Undo");
-        command.setShortcutStr("STRG+Z");
-        commandlets.add(command);
-        command = new Commandlet();
-        command.setName("Redo");
-        command.setShortcutStr("STRG+Y");
-        commandlets.add(command);
-        commandletGroup.setCommandlets(commandlets);
-        commandletGroups.add(commandletGroup);
     }
 }

@@ -77,7 +77,8 @@ public class MainViewController
                 App.PRIMARYSTAGE.addEventHandler(commandletShorcutHandler.getKeyEventType(), commandletShorcutHandler::OnKeyInput);
                 MenuItem menuItem = new MenuItem();
                 menu.setOnAction(action-> commandlet.execute());
-                menuItem.setText(commandlet.getName()+" ("+commandlet.getShortcutStr()+")");
+                menuItem.setText(commandlet.getName());
+                //menuItem.setText(commandlet.getName()+" ("+commandlet.getShortcut()+")");
                 menu.getItems().add(menuItem);
             }
             this.menu.getMenus().add(menu);

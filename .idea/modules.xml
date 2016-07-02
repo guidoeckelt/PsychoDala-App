@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PsychoDala-Parent.iml" filepath="$PROJECT_DIR$/PsychoDala-Parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PsychoDala.iml" filepath="$PROJECT_DIR$/PsychoDala.iml" />
       <module fileurl="file://$PROJECT_DIR$/PsychoDala-app/PsychoDala-app.iml" filepath="$PROJECT_DIR$/PsychoDala-app/PsychoDala-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/PsychoDala-model/PsychoDala-model.iml" filepath="$PROJECT_DIR$/PsychoDala-model/PsychoDala-model.iml" />
     </modules>
