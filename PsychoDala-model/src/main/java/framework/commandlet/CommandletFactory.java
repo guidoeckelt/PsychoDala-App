@@ -1,7 +1,9 @@
 package framework.commandlet;
 
+import framework.application.IApplicationContext;
 import framework.io.Shortcut;
 import javafx.event.EventType;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -12,27 +14,30 @@ import java.util.List;
 /**
  * Created by Guido on 02.07.2016.
  */
-public class CommandletFactory {
+public class CommandletFactory
+        implements ICommandletFactory {
 
 
+    private IApplicationContext applicationContext;
     private List< CommandletGroupDescriptor> commandletGroupDescriptors;
 
-    public CommandletFactory(List<CommandletGroupDescriptor> commandletGroupDescriptors) {
+    public CommandletFactory(List<CommandletGroupDescriptor> commandletGroupDescriptors, IApplicationContext applicationContext) {
         this.commandletGroupDescriptors = commandletGroupDescriptors;
+        this.applicationContext = applicationContext;
     }
 
     public List<CommandletGroupDescriptor> getCommandletGroupDescriptors() {
         return commandletGroupDescriptors;
     }
 
+    @Override
     public List<CommandletGroup> buildCommandlets() {
         List<CommandletGroup> commandletGroups = new ArrayList<>();
         for(CommandletGroupDescriptor commandletGroupDescriptor : commandletGroupDescriptors){
             CommandletGroup commandletGroup = new CommandletGroup();
             commandletGroup.setName(commandletGroupDescriptor.getName());
-
             for(CommandletDescriptor commandletDescriptor : commandletGroupDescriptor.getCommandletDescriptors()){
-                Commandlet commandlet = buildCommandlet(commandletDescriptor);
+                Commandlet commandlet = buildCommandlet(commandletDescriptor, commandletGroup.getName());
                 commandletGroup.getCommandlets().add(commandlet);
             }
 
@@ -41,7 +46,7 @@ public class CommandletFactory {
         return commandletGroups;
     }
 
-    private Commandlet buildCommandlet(CommandletDescriptor commandletDescriptor) {
+    private Commandlet buildCommandlet(CommandletDescriptor commandletDescriptor, String groupName) {
         Commandlet commandlet = null;
         try {
             commandlet = (Commandlet)Class.forName(commandletDescriptor.getClassStr()).getConstructor().newInstance();
@@ -60,6 +65,11 @@ public class CommandletFactory {
             commandlet.setName(commandletDescriptor.getName());
             commandlet.setShortcut(buildShortcut(commandletDescriptor.getShortcut()));
             commandlet.setEventType(buildEventType(commandletDescriptor.getEventType()));
+            commandlet.setGroupName(groupName);
+            String path = "file:"+ applicationContext.getIconsDirectory()+"\\"+commandlet.getGroupName().toLowerCase()+"\\"+commandlet.getName().toLowerCase()+".png";
+            System.out.println(path);
+            Image icon = new Image(path);
+            commandlet.setIcon(icon);
         }
         return commandlet;
     }

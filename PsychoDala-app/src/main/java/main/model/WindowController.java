@@ -1,7 +1,7 @@
 package main.model;
 
 import entry.App;
-import framework.IControllerBase;
+import framework.controller.IControllerBase;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -25,7 +25,6 @@ public class WindowController
 //==============IControllerBase-Implementation
     protected void load() {
         primaryStage = App.PRIMARYSTAGE;
-        primaryStage.initStyle(StageStyle.UNDECORATED);
         isPressedBefore = false;
         maximizedOrdered = new SimpleBooleanProperty(false);
     }

@@ -1,16 +1,17 @@
 package main.controller;
 
 import entry.App;
-import framework.*;
 import framework.application.ApplicationContext;
 import framework.application.IApplicationContext;
 import framework.commandlet.*;
+import framework.controller.IControllerBase;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -65,8 +66,7 @@ public class MainViewController
         menu.addEventHandler(MouseEvent.MOUSE_RELEASED,windowController::onMouseReleased);
         loadMenus();
     }
-
-//Methods
+//Helper-Methods
     private void loadMenus(){
         for(CommandletGroup commandletGroup : commandletContext.getCommandletGroups()){
             Menu menu = new Menu();
@@ -76,12 +76,15 @@ public class MainViewController
                 CommandletShorcutHandler commandletShorcutHandler = commandletContext.getCommandletKeyHandlerFor(commandlet);
                 App.PRIMARYSTAGE.addEventHandler(commandletShorcutHandler.getKeyEventType(), commandletShorcutHandler::OnKeyInput);
                 MenuItem menuItem = new MenuItem();
-                menu.setOnAction(action-> commandlet.execute());
-                menuItem.setText(commandlet.getName());
-                //menuItem.setText(commandlet.getName()+" ("+commandlet.getShortcut()+")");
+                menuItem.setOnAction(action-> commandlet.execute());
+                menuItem.setText(commandlet.buildHeader());
+                menuItem.setGraphic(new ImageView(commandlet.getIcon()));
                 menu.getItems().add(menuItem);
             }
             this.menu.getMenus().add(menu);
         }
     }
+
+//Methods
+
 }

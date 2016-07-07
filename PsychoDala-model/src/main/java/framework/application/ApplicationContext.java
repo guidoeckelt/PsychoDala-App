@@ -7,10 +7,12 @@ public class ApplicationContext implements IApplicationContext{
 
     private String applicationDirectory;
     private String configDirectory;
+    private String iconsDirectory;
 
     public void load() {
         this.applicationDirectory = "";
         this.configDirectory = applicationDirectory+"conf\\";
+        this.iconsDirectory = applicationDirectory+"icons\\";
     }
 
     public void save() {
@@ -23,5 +25,10 @@ public class ApplicationContext implements IApplicationContext{
 
     public String getConfigDirectory() {
         return configDirectory;
+    }
+
+    @Override
+    public String getIconsDirectory() {
+        return iconsDirectory;
     }
 }

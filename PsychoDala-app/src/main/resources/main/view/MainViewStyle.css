@@ -84,8 +84,8 @@
  *====================Window-Buttons
 */
 .hbox-btn-container{
-    -fx-background-color:                   somegrey;
-    hovergrey:                              rgba(170,170,170,0.6);
+    -fx-background-color:                   rgb(170,170,170);
+    hovergrey:                              rgb(200,200,200);
     hoverred:                               rgba(255,0,0);
     red:                                    rgb(200,0,0);
 }
@@ -151,10 +151,8 @@
  *===========================Display
 */
 .root-display{
-    -fx-background-color:                   #000;
+    -fx-background-color:                   #A0A0A0;
 }
-
-
 /*
  *======================END==Display
 */

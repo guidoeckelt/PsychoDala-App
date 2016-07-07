@@ -23,7 +23,6 @@ public class CommandletContext
     private List<CommandletShorcutHandler> commandletShorcutHandlers;
 
     private List<CommandletGroupDescriptor> commandletGroupDescriptors;
-    private CommandletFactory commandletFactory;
 
     public CommandletContext(IApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
@@ -51,7 +50,7 @@ public class CommandletContext
     public void save() {
         File file = new File(applicationContext.getConfigDirectory()+"commandlets.config");
         CommandletConfiguration commandletConfiguration = new CommandletConfiguration();
-        commandletConfiguration.setCommandletGroupDescriptors(commandletFactory.getCommandletGroupDescriptors());
+        commandletConfiguration.setCommandletGroupDescriptors(commandletGroupDescriptors);
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(CommandletConfiguration.class);
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
@@ -79,7 +78,7 @@ public class CommandletContext
     }
 
     private void loadCommandlets(){
-        commandletFactory = new CommandletFactory(commandletGroupDescriptors);
+        ICommandletFactory commandletFactory = new CommandletFactory(commandletGroupDescriptors, applicationContext);
         commandletGroups = commandletFactory.buildCommandlets();
     }
 

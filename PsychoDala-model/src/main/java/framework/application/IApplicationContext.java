@@ -10,4 +10,5 @@ public interface IApplicationContext {
 
     String getApplicationDirectory();
     String getConfigDirectory();
+    String getIconsDirectory();
 }

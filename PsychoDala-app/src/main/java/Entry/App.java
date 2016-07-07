@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -20,21 +21,24 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        App.PRIMARYSTAGE = primaryStage;
         Bootstrapper bootstrapper = new Bootstrapper();
         bootstrapper.run();
+        App.PRIMARYSTAGE = primaryStage;
+        primaryStage.centerOnScreen();
+        primaryStage.initStyle(StageStyle.UNDECORATED);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/view/MainView.fxml"));
-        Parent root;
+        Parent node;
         try {
-            root = loader.load();
-            primaryStage.setScene(new Scene(root));
+            node = loader.load();
+            primaryStage.setScene(new Scene(node));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        primaryStage.centerOnScreen();
         primaryStage.show();
+
+
+
     }
 
     public static void exit(){

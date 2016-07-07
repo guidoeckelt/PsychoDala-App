@@ -1,4 +1,4 @@
-package framework;
+package framework.controller;
 
 /**
  * Created by Guido on 25.06.2016.
