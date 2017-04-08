@@ -20,7 +20,7 @@ public class JavaFxApp
         Bootstrapper bootstrapper = new JavaFxBootstrapper(this.getParameters());
         Application app =  bootstrapper.run();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainView2.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainView.fxml"));
         loader.setController(new MainViewController(primaryStage, app));
 
         try {
