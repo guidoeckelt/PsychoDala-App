@@ -11,7 +11,9 @@
 
     <modules>
         <module>PsychoDala-model</module>
-        <module>PsychoDala-app</module>
+        <module>PsychoDala-framework</module>
+        <module>PsychoDala-gui</module>
+        <module>PsychoDala-drawing</module>
     </modules>
 
     <properties>

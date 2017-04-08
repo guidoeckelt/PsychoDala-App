@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="root" minHeight="600.0" minWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" style="-fx-border-color: #000; -fx-border-width: 3px;">
+         <children>
+            <Canvas fx:id="drawingScene" height="400.0" width="400.0" BorderPane.alignment="CENTER" />
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

@@ -67,7 +67,6 @@ public class CommandletFactory
             commandlet.setEventType(buildEventType(commandletDescriptor.getEventType()));
             commandlet.setGroupName(groupName);
             String path = "file:"+ applicationContext.getIconsDirectory()+"\\"+commandlet.getGroupName().toLowerCase()+"\\"+commandlet.getName().toLowerCase()+".png";
-            System.out.println(path);
             Image icon = new Image(path);
             commandlet.setIcon(icon);
         }
