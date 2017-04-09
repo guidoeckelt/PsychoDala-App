@@ -1,7 +1,7 @@
 package app;
 
-import command.CommandProcessor;
-import command.StandardCommandProcessor;
+import app.command.CommandProcessor;
+import app.command.DefaultCommandProcessor;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class PsychoDalaApplication
 
     public PsychoDalaApplication(List<Module> modules) {
         this.modules = modules;
-        this.commandProcessor = new StandardCommandProcessor();
+        this.commandProcessor = new DefaultCommandProcessor();
     }
 
     @Override

@@ -6,4 +6,5 @@ package app;
 public interface Application {
 
     String getName();
+
 }

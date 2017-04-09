@@ -1,11 +1,11 @@
-package command;
+package app.command;
 
 import java.util.Stack;
 
 /**
  * Created by Guido on 31.03.2017.
  */
-public class StandardCommandProcessor
+public class DefaultCommandProcessor
     implements CommandProcessor{
 
     private Stack<RecoverableCommand> history = new Stack<>();
