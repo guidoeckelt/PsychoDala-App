@@ -1,0 +1,23 @@
+* {
+    -scene-background: #e2e2e2;
+}
+
+.root {
+    -fx-min-width: 800px;
+    -fx-min-height: 600px;
+
+}
+
+.renderCanvasContainer {
+
+    /*-fx-min-width: 800px;*/
+    /*-fx-min-height: 600px;*/
+    /*-fx-pref-width: 1200px;*/
+    /*-fx-pref-height: 900px;*/
+    /*-fx-max-width: 100%;*/
+    /*-fx-max-height: 100%;*/
+
+    -fx-background-color: -scene-background;
+    -fx-border-color: #000;
+    -fx-border-width: 2px;
+}

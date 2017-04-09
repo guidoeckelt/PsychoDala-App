@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" minHeight="600.0" minWidth="800.0" styleClass="root"
+            stylesheets="@MainView.css" xmlns="http://javafx.com/javafx/8">
+    <center>
+        <VBox fx:id="renderCanvasContainer" styleClass="renderCanvasContainer" BorderPane.alignment="CENTER"/>
+    </center>
+    <top>
+        <VBox>
+            <children>
+                <MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
+                    <menus>
+                        <Menu mnemonicParsing="false" text="File">
+                            <items>
+                                <MenuItem fx:id="newDrawing" mnemonicParsing="false" text="New"/>
+                                <MenuItem fx:id="newDrawingMenu" mnemonicParsing="false" text="New ..."/>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                                <MenuItem fx:id="saveDrawing" mnemonicParsing="false" text="Save"/>
+                                <MenuItem fx:id="saveAsDrawing" mnemonicParsing="false" text="Save As"/>
+                                <SeparatorMenuItem mnemonicParsing="false"/>
+                                <MenuItem fx:id="openDrawing" mnemonicParsing="false" text="Open"/>
+                                <Menu fx:id="openRecent" mnemonicParsing="false" text="Open Recent">
+                                    <items>
+                                        <MenuItem fx:id="recent1" mnemonicParsing="false" text="Recent-1"/>
+                                        <MenuItem fx:id="recent2" mnemonicParsing="false" text="Recent-2"/>
+                                    </items>
+                                </Menu>
+                                <SeparatorMenuItem mnemonicParsing="false"/>
+                                <MenuItem fx:id="exportAsImage" mnemonicParsing="false" text="Save As"/>
+                                <SeparatorMenuItem mnemonicParsing="false"/>
+                                <MenuItem fx:id="exit" mnemonicParsing="false" text="Exit"/>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Edit">
+                            <items>
+                                <MenuItem fx:id="undo" mnemonicParsing="false" text="Undo"/>
+                                <MenuItem fx:id="redo" mnemonicParsing="false" text="Redo"/>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="View">
+                            <items>
+                                <MenuItem fx:id="switchRenderState" mnemonicParsing="false" text="Stop Rendering"/>
+                                <Menu mnemonicParsing="false" text="Background">
+                                    <items>
+                                        <MenuItem fx:id="defaultB" mnemonicParsing="false" text="Default"/>
+                                        <MenuItem fx:id="blackWhiteTiles" mnemonicParsing="false"
+                                                  text="BlackWhiteTiles"/>
+                                    </items>
+                                </Menu>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="?">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Help"/>
+                                <MenuItem mnemonicParsing="false" text="About Us"/>
+                                <MenuItem mnemonicParsing="false" text="About"/>
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+            </children>
+        </VBox>
+    </top>
+</BorderPane>

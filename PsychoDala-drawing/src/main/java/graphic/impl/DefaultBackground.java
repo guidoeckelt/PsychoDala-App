@@ -3,7 +3,6 @@ package graphic.impl;
 import graphic.Graphic;
 import graphic.GraphicCanvas;
 import javafx.geometry.Point2D;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 /**
@@ -12,7 +11,7 @@ import javafx.scene.paint.Color;
 public class DefaultBackground
     extends Graphic {
 
-    private final Color defaultBackgroundColor = Color.color(0.3,0.3,0.3,1);
+    private final Color defaultBackgroundColor = Color.color(0.76, 0.76, 0.76, 1);
 
     @Override
     protected void specificPaint(GraphicCanvas gc) {
