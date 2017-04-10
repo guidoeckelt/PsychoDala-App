@@ -10,4 +10,5 @@
 ## Maven
 #################
 
-**/target/
+**/target/classes
+**/target/generated-sources
