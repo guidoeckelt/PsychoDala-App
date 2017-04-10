@@ -2,6 +2,7 @@ package entry;
 
 import app.Application;
 import bootstrap.Bootstrapper;
+import error.JavaFxErrorHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import main.MainViewController;
@@ -27,7 +28,19 @@ public class JavaFxApp
         try {
             loader.load();
         } catch (Exception e) {
-            new JavaFxBootstrapExceptionHandler(e);
+            this.handleFxmlLoadException(e);
         }
+    }
+
+    private void handleFxmlLoadException(Exception e) {
+        String article = this.isFirstLetterVowel(e) ? "an" : "a";
+        String headerText = "While bootstrapping " + article + " " + e.getClass().getSimpleName() + " occured";
+        String contentText = "Message:\n" + e.getMessage();
+        JavaFxErrorHandler.Instance().showException(e, headerText, contentText);
+    }
+
+    private boolean isFirstLetterVowel(Exception e) {
+        String firstLetter = e.getClass().getSimpleName().substring(0, 1).toLowerCase();
+        return firstLetter.matches("[AEIOUaeiou]");
     }
 }
