@@ -5,12 +5,13 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" minHeight="600.0" minWidth="800.0" styleClass="root"
             stylesheets="@MainView.css" xmlns="http://javafx.com/javafx/8">
     <center>
-        <VBox fx:id="renderCanvasContainer" styleClass="renderCanvasContainer" BorderPane.alignment="CENTER"/>
+        <VBox fx:id="renderCanvasContainer" alignment="CENTER" styleClass="renderCanvasContainer"
+              BorderPane.alignment="CENTER"/>
     </center>
     <top>
-        <VBox>
+        <VBox fx:id="topContainer" styleClass="topContatiner">
             <children>
-                <MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
+                <MenuBar fx:id="menuBar" styleClass="menuBar" BorderPane.alignment="CENTER">
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
                             <items>
@@ -44,7 +45,7 @@
                                 <MenuItem fx:id="switchRenderState" mnemonicParsing="false" text="Stop Rendering"/>
                                 <Menu mnemonicParsing="false" text="Background">
                                     <items>
-                                        <MenuItem fx:id="defaultB" mnemonicParsing="false" text="Default"/>
+                                        <MenuItem fx:id="defaultBackground" mnemonicParsing="false" text="Default"/>
                                         <MenuItem fx:id="blackWhiteTiles" mnemonicParsing="false"
                                                   text="BlackWhiteTiles"/>
                                     </items>
@@ -60,6 +61,16 @@
                         </Menu>
                     </menus>
                 </MenuBar>
+                <VBox fx:id="toolsBarContainer" styleClass="toolsBarContainer">
+                    <children>
+                        <ToolBar fx:id="toolsBar1" VBox.vgrow="ALWAYS">
+                            <items>
+                                <ToggleButton fx:id="pointTool" mnemonicParsing="false" text="Point"/>
+                                <ToggleButton fx:id="lineTool" mnemonicParsing="false" text="Line"/>
+                            </items>
+                        </ToolBar>
+                    </children>
+                </VBox>
             </children>
         </VBox>
     </top>

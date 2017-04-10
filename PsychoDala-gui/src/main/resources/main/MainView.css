@@ -8,6 +8,47 @@
 
 }
 
+.topContatiner {
+
+}
+
+.menuBar {
+    /*-fx-min-width: 25px;*/
+    -fx-min-height: 25px;
+    /*-fx-pref-width: 25px;*/
+    -fx-pref-height: 25px;
+    /*-fx-max-width: 25px;*/
+    -fx-max-height: 25px;
+
+}
+
+.toolsBarContainer {
+    -fx-min-width: inherit;
+    -fx-pref-width: inherit;
+    -fx-max-width: inherit;
+
+}
+
+.toolsBarContainer > * {
+    /*-fx-min-width: 25px;*/
+    -fx-min-height: 25px;
+    /*-fx-pref-width: 25px;*/
+    -fx-pref-height: 25px;
+    /*-fx-max-width: 25px;*/
+    -fx-max-height: 25px;
+
+    -fx-padding: 0px;
+}
+
+.toolsBarContainer > * * {
+    /*-fx-min-width: 25px;*/
+    -fx-min-height: inherit;
+    /*-fx-pref-width: 25px;*/
+    -fx-pref-height: inherit;
+    /*-fx-max-width: 25px;*/
+    -fx-max-height: inherit;
+}
+
 .renderCanvasContainer {
 
     /*-fx-min-width: 800px;*/
@@ -20,4 +61,6 @@
     -fx-background-color: -scene-background;
     -fx-border-color: #000;
     -fx-border-width: 2px;
+
+    -fx-alignment: center;
 }

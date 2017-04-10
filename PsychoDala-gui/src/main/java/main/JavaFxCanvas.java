@@ -1,6 +1,8 @@
 package main;
 
-import javafx.scene.Parent;
+import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.Pane;
 import render.RendererCanvas;
 
 /**
@@ -9,19 +11,34 @@ import render.RendererCanvas;
 public class JavaFxCanvas
         implements RendererCanvas {
 
-    private Parent parent;
+    private Pane parent;
     private double width;
     private double height;
+    private Canvas canvas;
 
-    public JavaFxCanvas(Parent parent) {
+    public JavaFxCanvas(Pane parent) {
         this(parent, 400, 400);
     }
 
-    public JavaFxCanvas(Parent parent, double width, double height) {
+    public JavaFxCanvas(Pane parent, double width, double height) {
         this.width = width;
         this.height = height;
         this.parent = parent;
+        this.canvas = new Canvas(width, height);
+        this.addCanvasToParent();
+    }
 
+    public void setParent(Pane parent) {
+        this.parent = parent;
+    }
+
+    private void addCanvasToParent() {
+        this.parent.getChildren().add(this.canvas);
+    }
+
+    @Override
+    public Node toNode() {
+        return this.canvas;
     }
 
 }

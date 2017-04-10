@@ -3,7 +3,6 @@ package main;
 import app.Application;
 import drawing.Drawing;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -11,14 +10,15 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import render.DefaultRenderer;
 import render.Renderer;
 import render.RendererCanvas;
+import render.defauItt.DefaultRenderer;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -34,13 +34,15 @@ public class MainViewController
 
     private final Application app;
     private final Stage primaryStage;
+    RendererCanvas rendererCanvas;
     @FXML
     BorderPane root;
     @FXML
     MenuBar menuBar;
     @FXML
+    VBox toolsBarContainer;
+    @FXML
     VBox renderCanvasContainer;
-    RendererCanvas rendererCanvas;
     Canvas renderCanvas;
     @FXML
     MenuItem newDrawing;
@@ -65,11 +67,14 @@ public class MainViewController
     @FXML
     MenuItem switchRenderState;
     @FXML
-    MenuItem defaultB;
+    MenuItem defaultBackground;
     @FXML
     MenuItem blackWhiteTiles;
+    @FXML
+    ToggleButton pointTool;
+    @FXML
+    ToggleButton drawTool;
     private Renderer renderer;
-
     public MainViewController(Stage primaryStage, Application app) {
         this.primaryStage = primaryStage;
         this.app = app;
@@ -78,9 +83,10 @@ public class MainViewController
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.initiateWindow();
-        this.createRenderCanvas();
-        renderer = new DefaultRenderer(this.renderCanvas);
         this.addMenuHandler();
+        this.createRenderAndCanvas();
+
+//        this.newDrawing();
     }
 
     private void initiateWindow() {
@@ -96,33 +102,36 @@ public class MainViewController
         this.primaryStage.show();
     }
 
-    private void createRenderCanvas() {
+    private void createRenderAndCanvas() {
+
         double width = 800;
         double height = 600;
         this.renderCanvas = new Canvas(width, height);
         this.renderCanvasContainer.getChildren().add(this.renderCanvas);
-
         this.rendererCanvas = new JavaFxCanvas(this.renderCanvasContainer, width, height);
+
+        this.renderer = new DefaultRenderer(this.renderCanvas);
     }
 
     private void addMenuHandler() {
         //File
-        newDrawing.setOnAction(this::newDrawing);
-        newDrawingMenu.setOnAction(this::newDrawingMenu);
-        saveDrawing.setOnAction(this::saveDrawing);
-        saveAsDrawing.setOnAction(this::saveAsDrawing);
-        openDrawing.setOnAction(this::openDrawing);
-        openRecent.setOnAction(this::openRecent);
-        exportAsImage.setOnAction(this::exportAsImage);
-        exit.setOnAction(this::exit);
+        newDrawing.setOnAction(event -> this.newDrawing());
+        newDrawingMenu.setOnAction(event -> this.newDrawingMenu());
+        saveDrawing.setOnAction(event -> this.saveDrawing());
+        saveAsDrawing.setOnAction(event -> this.saveAsDrawing());
+        openDrawing.setOnAction(event -> this.openDrawing());
+        openRecent.setOnAction(event -> this.openRecent());
+        exportAsImage.setOnAction(event -> this.exportAsImage());
+        exit.setOnAction(event -> this.exit());
         //Edit
-        undo.setOnAction(this::undo);
-        redo.setOnAction(this::redo);
+        undo.setOnAction(event -> this.undo());
+        redo.setOnAction(event -> this.redo());
         //View
-        switchRenderState.setOnAction(this::switchRenderState);
-        defaultB.setOnAction(this::defaultB);
-        blackWhiteTiles.setOnAction(this::blackWhiteTiles);
+        switchRenderState.setOnAction(event -> this.switchRenderState());
+        defaultBackground.setOnAction(event -> this.defaultBackground());
+        blackWhiteTiles.setOnAction(event -> this.blackWhiteTiles());
     }
+
 
     private void OnCloseRequest(WindowEvent windowEvent) {
         this.renderer.stop();
@@ -134,7 +143,7 @@ public class MainViewController
         this.primaryStage.setTitle(title);
     }
 
-    private void newDrawing(ActionEvent actionEvent) {
+    private void newDrawing() {
         String name = "New Drawing";
         Drawing drawing = new Drawing();
         this.renderer.setDrawing(drawing);
@@ -142,43 +151,43 @@ public class MainViewController
         this.renderer.start();
     }
 
-    private void newDrawingMenu(ActionEvent actionEvent) {
+    private void newDrawingMenu() {
 
     }
 
-    private void saveDrawing(ActionEvent actionEvent) {
+    private void saveDrawing() {
 
     }
 
-    private void saveAsDrawing(ActionEvent actionEvent) {
+    private void saveAsDrawing() {
 
     }
 
-    private void openDrawing(ActionEvent actionEvent) {
+    private void openDrawing() {
 
     }
 
-    private void openRecent(ActionEvent actionEvent) {
+    private void openRecent() {
 
     }
 
-    private void exportAsImage(ActionEvent actionEvent) {
+    private void exportAsImage() {
 
     }
 
-    private void exit(ActionEvent actionEvent) {
+    private void exit() {
         Platform.exit();
     }
 
-    private void undo(ActionEvent actionEvent) {
+    private void undo() {
 
     }
 
-    private void redo(ActionEvent actionEvent) {
+    private void redo() {
 
     }
 
-    private void switchRenderState(ActionEvent actionEvent) {
+    private void switchRenderState() {
         if(this.renderer.isRunning()){
             this.renderer.stop();
         } else {
@@ -194,10 +203,12 @@ public class MainViewController
             this.switchRenderState.setText(this.START_TEXT);
         }
     }
-    private void defaultB(ActionEvent actionEvent) {
+
+    private void defaultBackground() {
         this.renderer.setBackground(DefaultRenderer.DEFAULT_BACKGROUND);
     }
-    private void blackWhiteTiles(ActionEvent actionEvent) {
+
+    private void blackWhiteTiles() {
         this.renderer.setBackground(DefaultRenderer.BLACK_WHITE_TILES);
     }
 
