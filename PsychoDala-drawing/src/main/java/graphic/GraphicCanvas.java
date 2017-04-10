@@ -32,6 +32,7 @@ public class GraphicCanvas {
         this.gc.setFill(fill);
         this.isUsed = true;
     }
+
     public void fillRect(double x, double y, double width, double height) {
         this.gc.fillRect(x,y, width,height);
         this.isUsed = true;
@@ -44,12 +45,15 @@ public class GraphicCanvas {
     public double getWidth() {
         return width;
     }
+
     public void setWidth(double width) {
         this.width = width;
     }
+
     public double getHeight() {
         return height;
     }
+
     public void setHeight(double height) {
         this.height = height;
     }

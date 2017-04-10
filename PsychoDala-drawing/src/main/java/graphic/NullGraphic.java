@@ -6,8 +6,14 @@ package graphic;
 public class NullGraphic
         extends Graphic {
 
+    public NullGraphic() {
+        super(null);
+    }
+
     @Override
     protected void specificPaint(GraphicCanvas gc) {
 
     }
+
+
 }

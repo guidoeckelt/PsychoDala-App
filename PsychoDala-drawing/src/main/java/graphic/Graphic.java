@@ -1,5 +1,6 @@
 package graphic;
 
+import drawing.Drawing;
 import javafx.geometry.Point2D;
 
 /**
@@ -8,6 +9,11 @@ import javafx.geometry.Point2D;
 public abstract class Graphic {
 
     protected Point2D position;
+    protected Drawing drawing;
+
+    public Graphic(Drawing drawing) {
+        this.drawing = drawing;
+    }
 
     public GraphicImage paint(GraphicCanvas gc){
         this.specificPaint(gc);
