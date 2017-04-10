@@ -1,4 +1,4 @@
-package graphic.impl;
+package render.defauItt.graphic;
 
 import graphic.Graphic;
 import graphic.GraphicCanvas;
@@ -12,6 +12,10 @@ public class DefaultBackground
     extends Graphic {
 
     private final Color defaultBackgroundColor = Color.color(0.76, 0.76, 0.76, 1);
+
+    public DefaultBackground() {
+        super(null);
+    }
 
     @Override
     protected void specificPaint(GraphicCanvas gc) {

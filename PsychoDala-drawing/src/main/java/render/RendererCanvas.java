@@ -1,8 +1,11 @@
 package render;
 
+import javafx.scene.Node;
+
 /**
  * Created by Guido on 10.04.2017.
  */
 public interface RendererCanvas {
 
+    Node toNode();
 }

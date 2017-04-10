@@ -1,9 +1,9 @@
-package render;
+package render.defauItt;
 
 /**
  * Created by Guido on 09.04.2017.
  */
-public enum SpecialGraphicEnum {
+public enum DefaultRendererSpecialGraphicEnum {
     BACKGROUND,
     POINTER
 }

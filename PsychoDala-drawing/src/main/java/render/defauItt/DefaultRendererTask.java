@@ -1,12 +1,5 @@
-package render;
+package render.defauItt;
 
-import drawing.DrawingObject;
-import graphic.Graphic;
-import graphic.GraphicCanvas;
-import graphic.GraphicImage;
-import javafx.application.Platform;
-
-import java.util.List;
 import java.util.TimerTask;
 
 /**

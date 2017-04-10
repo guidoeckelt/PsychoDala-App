@@ -1,4 +1,4 @@
-package graphic.impl;
+package render.defauItt.graphic;
 
 import graphic.Graphic;
 import graphic.GraphicCanvas;
@@ -13,6 +13,10 @@ public class BlackWhiteTilesBackground
 
     private final Color black = Color.color(0.05,0.05,0.05,1);
     private final Color white = Color.color(0.95,0.95,0.95,1);
+
+    public BlackWhiteTilesBackground() {
+        super(null);
+    }
 
     @Override
     protected void specificPaint(GraphicCanvas gc) {

@@ -1,16 +1,17 @@
-package render;
+package render.defauItt;
 
 import drawing.Drawing;
 import drawing.DrawingObject;
 import graphic.Graphic;
 import graphic.GraphicCanvas;
-import graphic.GraphicFactory;
 import graphic.GraphicImage;
-import graphic.impl.BlackWhiteTilesBackground;
-import graphic.impl.DefaultBackground;
+import graphic.defaultt.DefaultGraphicFactory;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import render.Renderer;
+import render.defauItt.graphic.BlackWhiteTilesBackground;
+import render.defauItt.graphic.DefaultBackground;
 
 import java.util.List;
 import java.util.Timer;
@@ -20,7 +21,7 @@ import java.util.TimerTask;
  * Created by Guido on 01.04.2017.
  */
 public class DefaultRenderer
-    implements Renderer{
+        implements Renderer {
 
     public static final Graphic DEFAULT_BACKGROUND = new DefaultBackground();
     public static final Graphic BLACK_WHITE_TILES = new BlackWhiteTilesBackground();
@@ -43,18 +44,19 @@ public class DefaultRenderer
     public DefaultRenderer(Canvas c) {
         this.defaultPointer = null;
         this.canvas = c;
-        this.gc = c.getGraphicsContext2D();
 
         this.paintDelay = 10;
-
+        this.selectedBackground = DEFAULT_BACKGROUND;
     }
 
     @Override
     public void start() {
         this.startRenderProcess();
     }
+
     private void startRenderProcess(){
 
+        this.gc = this.canvas.getGraphicsContext2D();
         this.renderProcess = new Timer("RenderProcess");
         TimerTask task = new DefaultRendererTask(this);
         try {
@@ -75,13 +77,9 @@ public class DefaultRenderer
     @Override
     public void stop() {
         this.stopRenderProcess();
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         this.clearCanvas();
     }
+
     private void stopRenderProcess(){
 
         try{
@@ -93,6 +91,7 @@ public class DefaultRenderer
 
         this.isRunning = false;
     }
+
     @Override
     public boolean isRunning() {
         return this.isRunning;
@@ -132,27 +131,31 @@ public class DefaultRenderer
     void paintAction(){
         Platform.runLater(() -> {
             this.clearCanvas();
-            this.paint(SpecialGraphicEnum.BACKGROUND);
+            this.paint(DefaultRendererSpecialGraphicEnum.BACKGROUND);
             this.paintDrawing();
-            this.paint(SpecialGraphicEnum.POINTER);
+            this.paint(DefaultRendererSpecialGraphicEnum.POINTER);
         });
     }
 
     private void clearCanvas() {
+        if (this.canvas == null || this.gc == null)
+            return;
+
         double width = this.canvas.getWidth();
         double height = this.canvas.getHeight();
         this.gc.clearRect(0,0, width,height);
     }
+
     private void paintDrawing(){
         if(currentDrawing == null) return;
         List<DrawingObject> drawingObjects = this.currentDrawing.getDrawingObjects();
         for (DrawingObject drawingObject : drawingObjects) {
-            Graphic graphic = GraphicFactory.Instance().createGraphicFrom(drawingObject.getClass());
+            Graphic graphic = DefaultGraphicFactory.Instance().createGraphicFor(drawingObject);
             this.paint(graphic, new GraphicCanvas());
         }
     }
 
-    private void paint(SpecialGraphicEnum type) {
+    private void paint(DefaultRendererSpecialGraphicEnum type) {
         Graphic graphic = null;
         GraphicCanvas graphicCanvas = null;
         switch(type){
@@ -167,14 +170,17 @@ public class DefaultRenderer
         }
         this.paint(graphic, graphicCanvas);
     }
+
     private void paint(Graphic graphic, GraphicCanvas graphicCanvas){
         if(graphic == null) return;
         GraphicImage graphicImage = graphic.paint(graphicCanvas);
         if (graphicImage == null) {
             return;
         }
-        this.gc.drawImage(graphicImage.getImage(),
-                        graphicImage.getPosition().getX(),graphicImage.getPosition().getY());
+        this.gc.save();
+        this.gc.translate(graphicImage.getPosition().getX(), graphicImage.getPosition().getY());
+        this.gc.drawImage(graphicImage.getImage(), 0, 0);
+        this.gc.restore();
     }
 
 }
