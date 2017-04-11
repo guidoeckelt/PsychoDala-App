@@ -11,7 +11,7 @@ public class NullGraphic
     }
 
     @Override
-    protected void specificPaint(GraphicCanvas gc) {
+    protected void specificPaint() {
 
     }
 

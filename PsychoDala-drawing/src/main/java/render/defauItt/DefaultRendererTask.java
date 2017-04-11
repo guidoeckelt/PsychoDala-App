@@ -16,7 +16,7 @@ public class DefaultRendererTask
 
     @Override
     public void run() {
-        this.renderer.paintAction();
+        this.renderer.render();
     }
 
 }

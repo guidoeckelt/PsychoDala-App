@@ -66,7 +66,7 @@ public class DefaultGraphicFactory
                 try {
                     return retrieveConstructor(constructor);
                 } catch (Exception e) {
-                    System.out.println("Exception: " + e.getMessage());
+                    System.out.println("DefaultGraphicFactory-Exception: " + e.getMessage());
                 }
             }
         }
@@ -98,7 +98,7 @@ public class DefaultGraphicFactory
                 try {
                     return this.retrieveConstructor(constructor);
                 } catch (Exception e) {
-                    System.out.println("Exception: " + e.getMessage());
+                    System.out.println("DefaultGraphicFactory-Exception: " + e.getMessage());
                 }
             }
         }

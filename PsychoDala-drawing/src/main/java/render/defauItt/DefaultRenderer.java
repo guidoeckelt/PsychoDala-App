@@ -1,19 +1,13 @@
 package render.defauItt;
 
 import drawing.Drawing;
-import drawing.DrawingObject;
-import graphic.Graphic;
-import graphic.GraphicCanvas;
-import graphic.GraphicImage;
-import graphic.defaultt.DefaultGraphicFactory;
 import javafx.application.Platform;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import render.Renderer;
-import render.defauItt.graphic.BlackWhiteTilesBackground;
-import render.defauItt.graphic.DefaultBackground;
+import render.RendererCanvas;
+import render.SpecialGraphicEnum;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,30 +17,18 @@ import java.util.TimerTask;
 public class DefaultRenderer
         implements Renderer {
 
-    public static final Graphic DEFAULT_BACKGROUND = new DefaultBackground();
-    public static final Graphic BLACK_WHITE_TILES = new BlackWhiteTilesBackground();
-    private final Graphic defaultPointer;
-
-    private Canvas canvas;
-    private GraphicsContext gc;
-    private Graphic selectedBackground;
-
-    private Drawing currentDrawing;
+    private RendererCanvas rendererCanvas;
+    private ImageView imageView;
+    private Drawing selectedDrawing;
     private Timer renderProcess;
     private long paintDelay;
     private boolean isRunning;
 
-
-    public DefaultRenderer() {
-        this(null);
-    }
-
-    public DefaultRenderer(Canvas c) {
-        this.defaultPointer = null;
-        this.canvas = c;
+    public DefaultRenderer(RendererCanvas rendererCanvas, ImageView imageView) {
+        this.rendererCanvas = rendererCanvas;
+        this.imageView = imageView;
 
         this.paintDelay = 10;
-        this.selectedBackground = DEFAULT_BACKGROUND;
     }
 
     @Override
@@ -55,8 +37,6 @@ public class DefaultRenderer
     }
 
     private void startRenderProcess(){
-
-        this.gc = this.canvas.getGraphicsContext2D();
         this.renderProcess = new Timer("RenderProcess");
         TimerTask task = new DefaultRendererTask(this);
         try {
@@ -74,14 +54,16 @@ public class DefaultRenderer
 
         this.isRunning = true;
     }
+
     @Override
     public void stop() {
         this.stopRenderProcess();
-        this.clearCanvas();
+        this.rendererCanvas.clear();
     }
 
     private void stopRenderProcess(){
-
+        if (!this.isRunning)
+            return;
         try{
             this.renderProcess.cancel();
         }catch(Exception e){
@@ -98,89 +80,35 @@ public class DefaultRenderer
     }
 
     @Override
-    public Drawing getDrawing() {
-        return this.currentDrawing;
+    public Drawing getSelectedDrawing() {
+        return this.selectedDrawing;
     }
 
     @Override
-    public void setDrawing(Drawing drawing) {
-        this.currentDrawing = drawing;
+    public void selectDrawing(Drawing drawing) {
+        this.selectedDrawing = drawing;
     }
 
     @Override
-    public Graphic getBackground() {
-        return this.selectedBackground;
+    public RendererCanvas getRendererCanvas() {
+        return this.rendererCanvas;
     }
 
     @Override
-    public void setBackground(Graphic background) {
-        this.selectedBackground = background;
+    public void setRendererCanvas(RendererCanvas rendererCanvas) {
+        this.rendererCanvas = rendererCanvas;
     }
 
-    @Override
-    public Canvas getCanvas() {
-        return this.canvas;
-    }
+    void render() {
+        this.rendererCanvas.clear();
+        this.rendererCanvas.paint(SpecialGraphicEnum.BACKGROUND);
+        this.rendererCanvas.paintDrawing(this.selectedDrawing);
+        this.rendererCanvas.paint(SpecialGraphicEnum.POINTER);
 
-    @Override
-    public void setCanvas(Canvas canvas) {
-        this.canvas = canvas;
-        this.gc = canvas.getGraphicsContext2D();
-    }
-
-    void paintAction(){
         Platform.runLater(() -> {
-            this.clearCanvas();
-            this.paint(DefaultRendererSpecialGraphicEnum.BACKGROUND);
-            this.paintDrawing();
-            this.paint(DefaultRendererSpecialGraphicEnum.POINTER);
+            Image image = this.rendererCanvas.toImage();
+//            this.imageView.setImage(image);
         });
-    }
-
-    private void clearCanvas() {
-        if (this.canvas == null || this.gc == null)
-            return;
-
-        double width = this.canvas.getWidth();
-        double height = this.canvas.getHeight();
-        this.gc.clearRect(0,0, width,height);
-    }
-
-    private void paintDrawing(){
-        if(currentDrawing == null) return;
-        List<DrawingObject> drawingObjects = this.currentDrawing.getDrawingObjects();
-        for (DrawingObject drawingObject : drawingObjects) {
-            Graphic graphic = DefaultGraphicFactory.Instance().createGraphicFor(drawingObject);
-            this.paint(graphic, new GraphicCanvas());
-        }
-    }
-
-    private void paint(DefaultRendererSpecialGraphicEnum type) {
-        Graphic graphic = null;
-        GraphicCanvas graphicCanvas = null;
-        switch(type){
-            case BACKGROUND:
-                graphic = this.selectedBackground!=null?this.selectedBackground:DefaultRenderer.DEFAULT_BACKGROUND;
-                graphicCanvas = new GraphicCanvas(this.canvas.getWidth(),this.canvas.getHeight());
-                break;
-            case POINTER:
-                graphic = this.defaultPointer;
-                graphicCanvas = new GraphicCanvas();
-                break;
-        }
-        this.paint(graphic, graphicCanvas);
-    }
-
-    private void paint(Graphic graphic, GraphicCanvas graphicCanvas){
-        if(graphic == null) return;
-        GraphicImage graphicImage = graphic.paint(graphicCanvas);
-        if (graphicImage == null) {
-            return;
-        }
-        this.gc.save();
-        this.gc.translate(graphicImage.getPosition().getX(), graphicImage.getPosition().getY());
-        this.gc.drawImage(graphicImage.getImage(), 0, 0);
-        this.gc.restore();
     }
 
 }
