@@ -1,7 +1,6 @@
-package render.defauItt.graphic;
+package main.graphic;
 
 import graphic.Graphic;
-import graphic.GraphicCanvas;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
@@ -18,11 +17,11 @@ public class DefaultBackground
     }
 
     @Override
-    protected void specificPaint(GraphicCanvas gc) {
-        gc.setFill(this.defaultBackgroundColor);
-        double width = gc.getWidth();
-        double height = gc.getHeight();
-        gc.fillRect(0,0, width,height);
+    protected void specificPaint() {
+        graphicCanvas.setFill(this.defaultBackgroundColor);
+        double width = graphicCanvas.getWidth();
+        double height = graphicCanvas.getHeight();
+        graphicCanvas.fillRect(0, 0, width, height);
         this.position = new Point2D(0,0);
     }
 

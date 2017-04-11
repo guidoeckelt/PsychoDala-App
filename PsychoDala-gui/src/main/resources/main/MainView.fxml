@@ -5,73 +5,95 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" minHeight="600.0" minWidth="800.0" styleClass="root"
             stylesheets="@MainView.css" xmlns="http://javafx.com/javafx/8">
     <center>
-        <VBox fx:id="renderCanvasContainer" alignment="CENTER" styleClass="renderCanvasContainer"
-              BorderPane.alignment="CENTER"/>
-    </center>
-    <top>
-        <VBox fx:id="topContainer" styleClass="topContatiner">
+        <VBox fx:id="rendererCanvasContainer" alignment="CENTER" styleClass="rendererCanvasContainer"
+              BorderPane.alignment="TOP_CENTER">
             <children>
-                <MenuBar fx:id="menuBar" styleClass="menuBar" BorderPane.alignment="CENTER">
-                    <menus>
-                        <Menu mnemonicParsing="false" text="File">
-                            <items>
-                                <MenuItem fx:id="newDrawing" mnemonicParsing="false" text="New"/>
-                                <MenuItem fx:id="newDrawingMenu" mnemonicParsing="false" text="New ..."/>
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                                <MenuItem fx:id="saveDrawing" mnemonicParsing="false" text="Save"/>
-                                <MenuItem fx:id="saveAsDrawing" mnemonicParsing="false" text="Save As"/>
-                                <SeparatorMenuItem mnemonicParsing="false"/>
-                                <MenuItem fx:id="openDrawing" mnemonicParsing="false" text="Open"/>
-                                <Menu fx:id="openRecent" mnemonicParsing="false" text="Open Recent">
-                                    <items>
-                                        <MenuItem fx:id="recent1" mnemonicParsing="false" text="Recent-1"/>
-                                        <MenuItem fx:id="recent2" mnemonicParsing="false" text="Recent-2"/>
-                                    </items>
-                                </Menu>
-                                <SeparatorMenuItem mnemonicParsing="false"/>
-                                <MenuItem fx:id="exportAsImage" mnemonicParsing="false" text="Save As"/>
-                                <SeparatorMenuItem mnemonicParsing="false"/>
-                                <MenuItem fx:id="exit" mnemonicParsing="false" text="Exit"/>
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Edit">
-                            <items>
-                                <MenuItem fx:id="undo" mnemonicParsing="false" text="Undo"/>
-                                <MenuItem fx:id="redo" mnemonicParsing="false" text="Redo"/>
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="View">
-                            <items>
-                                <MenuItem fx:id="switchRenderState" mnemonicParsing="false" text="Stop Rendering"/>
-                                <Menu mnemonicParsing="false" text="Background">
-                                    <items>
-                                        <MenuItem fx:id="defaultBackground" mnemonicParsing="false" text="Default"/>
-                                        <MenuItem fx:id="blackWhiteTiles" mnemonicParsing="false"
-                                                  text="BlackWhiteTiles"/>
-                                    </items>
-                                </Menu>
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="?">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Help"/>
-                                <MenuItem mnemonicParsing="false" text="About Us"/>
-                                <MenuItem mnemonicParsing="false" text="About"/>
-                            </items>
-                        </Menu>
-                    </menus>
-                </MenuBar>
-                <VBox fx:id="toolsBarContainer" styleClass="toolsBarContainer">
-                    <children>
-                        <ToolBar fx:id="toolsBar1" VBox.vgrow="ALWAYS">
-                            <items>
-                                <ToggleButton fx:id="pointTool" mnemonicParsing="false" text="Point"/>
-                                <ToggleButton fx:id="lineTool" mnemonicParsing="false" text="Line"/>
-                            </items>
-                        </ToolBar>
-                    </children>
-                </VBox>
+                <!--<ImageView fx:id="imageView" fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />-->
             </children>
         </VBox>
+    </center>
+    <top>
+        <HBox fx:id="topContainer" styleClass="topContatiner">
+            <children>
+                <VBox fx:id="barContainer" styleClass="barContainer" HBox.hgrow="ALWAYS">
+                    <children>
+                        <MenuBar fx:id="menuBar" styleClass="menuBar" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
+                            <menus>
+                                <Menu mnemonicParsing="false" text="File">
+                                    <items>
+                                        <MenuItem fx:id="newDrawing" mnemonicParsing="false" text="New"/>
+                                        <MenuItem fx:id="newDrawingMenu" mnemonicParsing="false" text="New ..."/>
+                                        <SeparatorMenuItem mnemonicParsing="false"/>
+                                        <MenuItem fx:id="saveDrawing" mnemonicParsing="false" text="Save"/>
+                                        <MenuItem fx:id="saveAsDrawing" mnemonicParsing="false" text="Save As"/>
+                                        <SeparatorMenuItem mnemonicParsing="false"/>
+                                        <MenuItem fx:id="openDrawing" mnemonicParsing="false" text="Open"/>
+                                        <Menu fx:id="openRecent" mnemonicParsing="false" text="Open Recent">
+                                            <items>
+                                                <MenuItem fx:id="recent1" mnemonicParsing="false" text="Recent-1"/>
+                                                <MenuItem fx:id="recent2" mnemonicParsing="false" text="Recent-2"/>
+                                            </items>
+                                        </Menu>
+                                        <SeparatorMenuItem mnemonicParsing="false"/>
+                                        <MenuItem fx:id="exportAsImage" mnemonicParsing="false" text="Save As"/>
+                                        <SeparatorMenuItem mnemonicParsing="false"/>
+                                        <MenuItem fx:id="exit" mnemonicParsing="false" text="Exit"/>
+                                    </items>
+                                </Menu>
+                                <Menu mnemonicParsing="false" text="Edit">
+                                    <items>
+                                        <MenuItem fx:id="undo" mnemonicParsing="false" text="Undo"/>
+                                        <MenuItem fx:id="redo" mnemonicParsing="false" text="Redo"/>
+                                    </items>
+                                </Menu>
+                                <Menu mnemonicParsing="false" text="View">
+                                    <items>
+                                        <MenuItem fx:id="switchRenderState" mnemonicParsing="false"
+                                                  text="Stop Rendering"/>
+                                        <Menu mnemonicParsing="false" text="Background">
+                                            <items>
+                                                <MenuItem fx:id="defaultBackground" mnemonicParsing="false"
+                                                          text="Default"/>
+                                                <MenuItem fx:id="blackWhiteTiles" mnemonicParsing="false"
+                                                          text="BlackWhiteTiles"/>
+                                            </items>
+                                        </Menu>
+                                    </items>
+                                </Menu>
+                                <Menu mnemonicParsing="false" text="?">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="Help"/>
+                                        <MenuItem mnemonicParsing="false" text="About Us"/>
+                                        <MenuItem mnemonicParsing="false" text="About"/>
+                                    </items>
+                                </Menu>
+                            </menus>
+                        </MenuBar>
+                        <VBox fx:id="toolsBarContainer" styleClass="toolsBarContainer" VBox.vgrow="ALWAYS">
+                            <children>
+                                <ToolBar fx:id="toolsBar1" styleClass="toolsBar" VBox.vgrow="ALWAYS">
+                                    <items>
+                                        <Button mnemonicParsing="false" styleClass="tool" text="Button"/>
+                                    </items>
+                                </ToolBar>
+                                <ToolBar fx:id="toolsBar2" styleClass="toolsBar">
+                                    <items>
+                                        <ToolBar prefHeight="40.0" prefWidth="200.0" styleClass="toolsGroupBox">
+                                            <items>
+                                                <ToggleButton fx:id="pointTool" mnemonicParsing="false"
+                                                              styleClass="tool" text="Point"/>
+                                                <ToggleButton fx:id="lineTool" mnemonicParsing="false" styleClass="tool"
+                                                              text="Line"/>
+                                            </items>
+                                        </ToolBar>
+                                    </items>
+                        </ToolBar>
+                            </children>
+                        </VBox>
+                    </children>
+                </VBox>
+                <HBox fx:id="openDrawingsList" alignment="BASELINE_LEFT" styleClass="openDrawingsList"/>
+            </children>
+        </HBox>
     </top>
 </BorderPane>

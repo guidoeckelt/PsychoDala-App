@@ -5,13 +5,16 @@ import drawing.Drawing;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -20,7 +23,10 @@ import render.Renderer;
 import render.RendererCanvas;
 import render.defauItt.DefaultRenderer;
 
+import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -34,16 +40,22 @@ public class MainViewController
 
     private final Application app;
     private final Stage primaryStage;
-    RendererCanvas rendererCanvas;
     @FXML
     BorderPane root;
+    @FXML
+    HBox topContainer;
+    @FXML
+    VBox barContainer;
+    @FXML
+    HBox openDrawingsList;
     @FXML
     MenuBar menuBar;
     @FXML
     VBox toolsBarContainer;
     @FXML
-    VBox renderCanvasContainer;
-    Canvas renderCanvas;
+    VBox rendererCanvasContainer;
+    @FXML
+    ImageView imageView;
     @FXML
     MenuItem newDrawing;
     @FXML
@@ -74,7 +86,10 @@ public class MainViewController
     ToggleButton pointTool;
     @FXML
     ToggleButton drawTool;
+    private RendererCanvas rendererCanvas;
     private Renderer renderer;
+    private List<Drawing> openDrawings;
+
     public MainViewController(Stage primaryStage, Application app) {
         this.primaryStage = primaryStage;
         this.app = app;
@@ -84,7 +99,8 @@ public class MainViewController
     public void initialize(URL location, ResourceBundle resources) {
         this.initiateWindow();
         this.addMenuHandler();
-        this.createRenderAndCanvas();
+        this.createRendererAndRendererCanvas();
+        this.openDrawings = new ArrayList<>();
 
 //        this.newDrawing();
     }
@@ -102,15 +118,11 @@ public class MainViewController
         this.primaryStage.show();
     }
 
-    private void createRenderAndCanvas() {
-
+    private void createRendererAndRendererCanvas() {
         double width = 800;
         double height = 600;
-        this.renderCanvas = new Canvas(width, height);
-        this.renderCanvasContainer.getChildren().add(this.renderCanvas);
-        this.rendererCanvas = new JavaFxCanvas(this.renderCanvasContainer, width, height);
-
-        this.renderer = new DefaultRenderer(this.renderCanvas);
+        this.rendererCanvas = new JavaFxCanvas(this.rendererCanvasContainer, width, height);
+        this.renderer = new DefaultRenderer(this.rendererCanvas, imageView);
     }
 
     private void addMenuHandler() {
@@ -132,23 +144,35 @@ public class MainViewController
         blackWhiteTiles.setOnAction(event -> this.blackWhiteTiles());
     }
 
-
     private void OnCloseRequest(WindowEvent windowEvent) {
         this.renderer.stop();
     }
 
     private void updateWindowTitle(Drawing drawing) {
-        String path = drawing.getCorrespondingFile().getAbsolutePath();
-        String title = this.app.getName() + " - " + drawing.getName();
+        File file = drawing.getCorrespondingFile();
+        String path = file.getAbsolutePath();
+        boolean isTempFile = file.getParentFile().getName().equals("Temp");
+        String title = this.app.getName() + " - " + drawing.getName() + (isTempFile ? " - [" + path + "]" : "");
         this.primaryStage.setTitle(title);
     }
 
     private void newDrawing() {
-        String name = "New Drawing";
-        Drawing drawing = new Drawing();
-        this.renderer.setDrawing(drawing);
+        String name = "New Drawing" + (this.openDrawings.size() + 1);
+        Drawing drawing = new Drawing(name);
+        this.renderer.selectDrawing(drawing);
+
+        if (!this.renderer.isRunning())
+            this.renderer.start();
+
+        this.addToOpenDrawings(drawing);
         this.updateWindowTitle(drawing);
-        this.renderer.start();
+
+    }
+
+    private void addToOpenDrawings(Drawing drawing) {
+        this.openDrawings.add(drawing);
+        Node node = new Pane();
+        this.openDrawingsList.getChildren().add(node);
     }
 
     private void newDrawingMenu() {
@@ -205,11 +229,11 @@ public class MainViewController
     }
 
     private void defaultBackground() {
-        this.renderer.setBackground(DefaultRenderer.DEFAULT_BACKGROUND);
+        this.rendererCanvas.selectBackground(JavaFxCanvas.DEFAULT_BACKGROUND);
     }
 
     private void blackWhiteTiles() {
-        this.renderer.setBackground(DefaultRenderer.BLACK_WHITE_TILES);
+        this.rendererCanvas.selectBackground(JavaFxCanvas.BLACK_WHITE_TILES);
     }
 
 

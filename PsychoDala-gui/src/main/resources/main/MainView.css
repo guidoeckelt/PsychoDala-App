@@ -1,5 +1,12 @@
 * {
     -scene-background: #e2e2e2;
+
+    -open-drawings-list-background-color: #00c6e2;
+    -open-drawings-list-border-color: #008de2;
+    -open-drawings-list-border-width: 3px;
+
+    -open-drawing-background-color: #43e2db;
+    -open-drawing-border-color: #72aae2;
 }
 
 .root {
@@ -9,6 +16,37 @@
 }
 
 .topContatiner {
+
+    -fx-padding: 0px;
+}
+
+.openDrawingsList {
+    -fx-min-width: 100px;
+    -fx-min-height: 75px;
+    -fx-pref-width: 400px;
+    -fx-pref-height: 75px;
+    -fx-max-width: 600px;
+    -fx-max-height: 75px;
+
+    -fx-background-color: -open-drawings-list-background-color;
+    -fx-border-color: -open-drawings-list-border-color;
+    -fx-border-width: 3px;
+}
+
+.openDrawingsList > * {
+    -fx-min-width: 69px;
+    -fx-min-height: 69px;
+    -fx-pref-width: 69px;
+    -fx-pref-height: 69px;
+    -fx-max-width: 69px;
+    -fx-max-height: 69px;
+
+    -fx-background-color: -open-drawing-background-color;
+    -fx-border-color: -open-drawing-border-color;
+    -fx-border-width: 3px;
+}
+
+.barContainer {
 
 }
 
@@ -29,7 +67,8 @@
 
 }
 
-.toolsBarContainer > * {
+.toolsBarContainer .toolsBar,
+.toolsBarContainer .toolsBar .toolsGroupBox {
     /*-fx-min-width: 25px;*/
     -fx-min-height: 25px;
     /*-fx-pref-width: 25px;*/
@@ -40,16 +79,18 @@
     -fx-padding: 0px;
 }
 
-.toolsBarContainer > * * {
+.toolsBarContainer .toolsBar .tool,
+.toolsBarContainer .toolsBar .toolsGroupBox .tool {
     /*-fx-min-width: 25px;*/
     -fx-min-height: inherit;
     /*-fx-pref-width: 25px;*/
     -fx-pref-height: inherit;
     /*-fx-max-width: 25px;*/
     -fx-max-height: inherit;
+
 }
 
-.renderCanvasContainer {
+.rendererCanvasContainer {
 
     /*-fx-min-width: 800px;*/
     /*-fx-min-height: 600px;*/
@@ -59,8 +100,10 @@
     /*-fx-max-height: 100%;*/
 
     -fx-background-color: -scene-background;
-    -fx-border-color: #000;
-    -fx-border-width: 2px;
 
     -fx-alignment: center;
 }
+
+/*.rendererCanvas{*/
+
+/*}*/

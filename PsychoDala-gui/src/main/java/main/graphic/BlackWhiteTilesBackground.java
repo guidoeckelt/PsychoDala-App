@@ -1,7 +1,6 @@
-package render.defauItt.graphic;
+package main.graphic;
 
 import graphic.Graphic;
-import graphic.GraphicCanvas;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
@@ -19,14 +18,14 @@ public class BlackWhiteTilesBackground
     }
 
     @Override
-    protected void specificPaint(GraphicCanvas gc) {
+    protected void specificPaint() {
         Color currentColor = this.black;
         Color lastRowFirst = currentColor;
         double size = 20;
-        for(int y = 0; y < gc.getHeight(); y+=size){
-            for(int x = 0; x < gc.getWidth(); x+=size){
-                gc.setFill(currentColor);
-                gc.fillRect(x,y, size,size);
+        for (int y = 0; y < this.graphicCanvas.getHeight(); y += size) {
+            for (int x = 0; x < graphicCanvas.getWidth(); x += size) {
+                graphicCanvas.setFill(currentColor);
+                graphicCanvas.fillRect(x, y, size, size);
                 currentColor = currentColor.equals(this.black)
                             ? this.white
                             : this.black;
