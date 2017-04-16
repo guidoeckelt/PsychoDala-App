@@ -50,6 +50,16 @@
 
 }
 
+.bar {
+    /*-fx-min-width: 25px;*/
+    -fx-min-height: 25px;
+    /*-fx-pref-width: 25px;*/
+    -fx-pref-height: 25px;
+    /*-fx-max-width: 25px;*/
+    -fx-max-height: 25px;
+
+}
+
 .menuBar {
     /*-fx-min-width: 25px;*/
     -fx-min-height: 25px;

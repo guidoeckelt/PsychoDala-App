@@ -7,4 +7,5 @@ public interface Application {
 
     String getName();
 
+    void cleanUp();
 }
